@@ -1,0 +1,39 @@
+BEGIN
+    htp.p('<!DOCTYPE html>');
+    htp.p('<html>
+<head>
+<style>
+    .page { margin: 0 auto;width: 100%;padding: 0; /* Ensure no padding around the page */}  
+    @page { margin: 10mm;}
+    @media print { table { page-break-after:auto; } tr { page-break-inside:avoid; page-break-after:auto; }td { page-break-inside:avoid; page-break-after:auto; }thead { display:table-header-group; }tfoot { display:table-footer-group; }}
+    #left { width: 15%;float: left;padding: 0; /* Remove padding */margin-left: 0; /* Remove margin to align to left */}
+    #right { width: 85%; /* Adjust width to accommodate more space for the right side */float: left; /* Ensures both left and right align side by side */text-align: center;padding: 0; /* Remove padding */margin-right: 0; /* Remove margin */}
+    p { text-align: center;font-size: 12px; /* Reduced font size */margin: 4px 0;}
+    table { width: 100%; /* Full width for each table */margin: 0; /* Removed margin to reduce the gap */border-collapse: collapse;}         
+    tr { page-break-inside: avoid;page-break-after: auto;height: 20px; /* Sets a fixed height for rows */}
+    th, td { border: 1px solid #D0F0C0;text-align: center;font-size: 8px; /* Decreased font size */height: 40px; /* Fixed row height */overflow: hidden; /* Ensures content doesnt overflow */word-wrap: break-word; /* Break long words to fit in the cell */}
+    th { text-align: center;font-size: 8px;padding-top: 0.1em;padding-bottom: 0.1em;width: 100%; /* Ensure equal width for all headers */}
+    th { word-wrap: break-word;overflow: hidden;}
+    .flex-container { display: flex;/* justify-content: space-between;*/align-items: flex-start; /* Prevent stretching */gap: 0px; /* Space between tables */flex-wrap: wrap;}
+    #t1, #t2, #t4, #t5 { width: 24.9%; /* Each table takes up 19.9% of the available space */margin: 0; /* Remove bottom margin to eliminate extra space */padding: 0; /* Eliminate padding */}
+    #t1, #t2, #t4, #t5 {margin-bottom: 8px; /* Add some space between rows of tables if needed */}
+    .header { padding: 1px 1px; /* Equalize padding for all headers */background-color:#7AAE43; color:white;font-size: 10px;}
+    #t3 { width: 100%;background-color:#689D3A; color:white;margin-bottom: 2px; /* Add some space between rows of tables if needed */width: 99.5%;}
+    #t7 { width: 99.5%;background-color: #D0F0C0;margin-bottom: 0px;border-collapse: collapse; /* Ensures no extra space between borders */}
+    #t7 td { padding: 1px 1px; /* Minimized padding */line-height: 0; /* Reduces the height of the text line */font-size: 12px; /* Optional: Reduce font size to further minimize height */}
+    #t9{ width: 99.5%;margin-bottom: 0px;} #t9 td {word-wrap: break-word;}
+    #t10{ width: 99.5%;margin-bottom: 0px;} #t9 td {word-wrap: break-word;}
+    #t11{ width: 99.5%;margin-bottom: 0px;} #t9 td {word-wrap: break-word;}
+  </style>
+</head>');
+   htp.p('<body>');
+
+htp.p('<div class="page">');
+   htp.p('<div class="page-header">
+   <div id="left">
+   <img src="#APP_FILES#AB Logo.png" width="200px" height="75px"> </div>
+   <div id="right">');
+   FOR z IN (SELECT TO_CHAR(SYSDATE, 'DAY MONTH DD, YYYY') AS t FROM DUAL) 
+   LOOP htp.p('<p style="margin-bottom:-5px">' || htf.escape_sc(z.t) || '</p>');END LOOP;
+   htp.p('<h2 style="text-align: center; margin-bottom:-3px"> Deal Policy Summary</h2> </div>');
+htp.p('</body>');htp.p('</html>');END;
